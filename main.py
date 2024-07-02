@@ -2,6 +2,7 @@ import pygame
 import sys
 import random
 import asyncio
+import streamlit
 
 
 pygame.init()
