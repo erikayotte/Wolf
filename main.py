@@ -65,9 +65,9 @@ def display_scores():
     st.write("### Scores:")
     for player in st.session_state.players:
         if "name" in player and player["name"]:  # Ensure player names are valid
-            st.write(f"## {player['name']}: {player['score']}")
+            st.write(f"# {player['name']}: {player['score']}")
         else:
-            st.write(f"## Joueurs # {player['number']}: Inconnu (Score: {player['score']})")
+            st.write(f"# Joueurs # {player['number']}: Inconnu (Score: {player['score']})")
             
 # Main game loop
 if st.session_state.state == MENU:
@@ -95,14 +95,17 @@ elif st.session_state.state == ASK_NUM_PLAYERS:
 
 elif st.session_state.state == ASK_PLAYER_NAMES:
     st.title("Entrer le nom des joueurs")
+    
     if st.session_state.current_player <= st.session_state.num_players:
-        # Text input for current player's name
+        # Text input for the current player's name
         name = st.text_input(
-            f"Entrer le nom du joueurs # {st.session_state.current_player}:",
+            f"Entrer le nom du joueur #{st.session_state.current_player}:",
             key=f"name_input_{st.session_state.current_player}"  # Unique key for each player
         )
+        
+        # Submit button for each player
         if st.button("Soumettre", key=f"submit_button_{st.session_state.current_player}"):
-            if name.strip():  # Check that the name is not empty
+            if name.strip():  # Ensure name is not empty
                 st.session_state.players.append({
                     "number": st.session_state.current_player,
                     "name": name,
@@ -112,14 +115,19 @@ elif st.session_state.state == ASK_PLAYER_NAMES:
                 st.session_state.current_player += 1  # Move to the next player
             else:
                 st.warning("Entrer un nom valide.")
-    else:
+    
+    # Once all players are registered, assign the last player as the wolf and move to WAIT_READY
+    if st.session_state.current_player > st.session_state.num_players:
         # Assign the last player as the initial wolf
         st.session_state.players[-1]["wolf"] = True
+        # Set state to WAIT_READY so that the Start Game button is shown
         st.session_state.state = WAIT_READY
 
 elif st.session_state.state == WAIT_READY:
-    st.title("Joueurs Prêt !")
-    if st.button("Débuter la partie"):
+    st.title("Joueurs prêts")
+    
+    # Show the start button only once all players are ready
+    if st.button("Démarrer le jeu"):
         st.session_state.state = CHOOSE_PARTNER
 
 elif st.session_state.state == CHOOSE_PARTNER:
