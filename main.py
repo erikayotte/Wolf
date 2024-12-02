@@ -153,10 +153,10 @@ elif st.session_state.state == ASK_WIN:
     st.title("Est-ce que le Wolf a gagné ?")
     won = st.radio("Choisissez le résulat:", ["Oui", "Non"], key=f"won_radio_{st.session_state.turn})
     
-    if st.button("Soumettre", key=f"submit_win_{st.session_state.turn}):
+    if st.button("Soumettre", key=f"submit_win_{st.session_state.turn}"):
         if won:
             wolf_index = next(idx for idx, player in enumerate(st.session_state.players) if player["wolf"])
-           calculate_scores(st.session_state.players, wolf_index, st.session_state.partner_choice, won == "Oui")
+            calculate_scores(st.session_state.players, wolf_index, st.session_state.partner_choice, won == "Oui")
             st.session_state.turn += 1
             if st.session_state.turn > 9:  # End after 9 holes
                 st.session_state.state = SHOW_RESULTS
