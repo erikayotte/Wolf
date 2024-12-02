@@ -150,17 +150,19 @@ elif st.session_state.state == CHOOSE_PARTNER:
         st.session_state.state = ASK_WIN
 
 elif st.session_state.state == ASK_WIN:
-    st.title("Est-ce que le Wolf a réussi ?")
-    won = st.radio("Select the outcome:", ["Oui", "Non"])
-    if st.button("Soumettre"):
-        wolf_index = next(idx for idx, player in enumerate(st.session_state.players) if player["wolf"])
-        calculate_scores(st.session_state.players, wolf_index, st.session_state.partner_choice, won == "Oui")
-        st.session_state.turn += 1
-        if st.session_state.turn > 9:  # End after 9 holes
-            st.session_state.state = SHOW_RESULTS
-        else:
-            cycle_wolf(st.session_state.players)
-            st.session_state.state = CHOOSE_PARTNER
+    st.title("Est-ce que le Wolf a gagné ?")
+    won = st.radio("Choisissez le résulat:", ["Oui", "Non"], key=f"won_radio_{st.session_state.turn})
+    
+    if st.button("Soumettre", key=f"submit_win_{st.session_state.turn}):
+        if won:
+            wolf_index = next(idx for idx, player in enumerate(st.session_state.players) if player["wolf"])
+           calculate_scores(st.session_state.players, wolf_index, st.session_state.partner_choice, won == "Oui")
+            st.session_state.turn += 1
+            if st.session_state.turn > 9:  # End after 9 holes
+                st.session_state.state = SHOW_RESULTS
+            else:
+                cycle_wolf(st.session_state.players)
+                st.session_state.state = CHOOSE_PARTNER
 
 elif st.session_state.state == SHOW_RESULTS:
     st.title("Game Over")
