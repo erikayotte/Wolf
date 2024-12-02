@@ -180,5 +180,5 @@ elif st.session_state.state == SHOW_RESULTS:
             player["score"] = 0
 
 # Display scores after all players are registered
-if st.session_state.state not in {MENU, RULES, ASK_NUM_PLAYERS, ASK_PLAYER_NAMES}:
+if st.session_state.state not in {MENU, RULES, ASK_NUM_PLAYERS, ASK_PLAYER_NAMES, WAIT_READY}:
     display_scores()
