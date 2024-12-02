@@ -83,7 +83,9 @@ elif st.session_state.state == ASK_PLAYER_NAMES:
                 "wolf": False,
             })
             st.session_state.current_player += 1  # Move to the next player
-        elif st.session_state.current_player > st.session_state.num_players:
+        
+        # When all players are registered, set the last one as the wolf and move to the next state
+        if st.session_state.current_player > st.session_state.num_players:
             st.session_state.players[-1]["wolf"] = True  # Last player starts as Wolf
             st.session_state.state = WAIT_READY
 
