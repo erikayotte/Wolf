@@ -58,6 +58,12 @@ def get_winners(players):
     max_score = max(p["score"] for p in players)
     return [p for p in players if p["score"] == max_score]
 
+# Display the current scores at the bottom of the screen
+def display_scores():
+    st.write("### Scores:")
+    for player in st.session_state.players:
+        st.write(f"{player['name']}: {player['score']}")
+
 # Main game loop
 if st.session_state.state == ASK_NUM_PLAYERS:
     st.title("Disc Golf Wolf")
@@ -69,25 +75,19 @@ if st.session_state.state == ASK_NUM_PLAYERS:
 
 elif st.session_state.state == ASK_PLAYER_NAMES:
     st.title("Enter Player Names")
-    
-    # Ensure player input form is displayed for the current player
     if st.session_state.current_player <= st.session_state.num_players:
         name = st.text_input(f"Enter name for player {st.session_state.current_player}:")
-        submit_button = st.button("Submit")
-        
-        if submit_button and name:  # Only proceed if the name is entered and submit is clicked
+        if st.button("Submit"):
             st.session_state.players.append({
                 "number": st.session_state.current_player,
                 "name": name,
                 "score": 0,
                 "wolf": False,
             })
-            st.session_state.current_player += 1  # Move to the next player
-        
-        # When all players are registered, set the last one as the wolf and move to the next state
-        if st.session_state.current_player > st.session_state.num_players:
-            st.session_state.players[-1]["wolf"] = True  # Last player starts as Wolf
-            st.session_state.state = WAIT_READY
+            st.session_state.current_player += 1
+    else:
+        st.session_state.players[-1]["wolf"] = True  # Last player starts as Wolf
+        st.session_state.state = WAIT_READY
 
 elif st.session_state.state == WAIT_READY:
     st.title("Players Ready")
@@ -147,3 +147,6 @@ elif st.session_state.state == SHOW_RESULTS:
         st.session_state.turn = 1
         for player in st.session_state.players:
             player["score"] = 0
+
+# Display scores at the bottom of every page
+display_scores()
