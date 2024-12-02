@@ -62,7 +62,7 @@ def get_winners(players):
 if st.session_state.state == ASK_NUM_PLAYERS:
     st.title("Disc Golf Wolf")
     st.session_state.num_players = st.selectbox("Select number of players:", list(range(1, 9)))
-    if st.session_state.num_players > 0:
+    if st.button("Next"):
         st.session_state.state = ASK_PLAYER_NAMES
         st.session_state.players = []
         st.session_state.current_player = 1
@@ -70,22 +70,17 @@ if st.session_state.state == ASK_NUM_PLAYERS:
 elif st.session_state.state == ASK_PLAYER_NAMES:
     st.title("Enter Player Names")
     
-    # Check if we're on the right player
+    # Ensure player input form is displayed for the current player
     if st.session_state.current_player <= st.session_state.num_players:
-        # Create the input box for the player's name
-        name = st.text_input(f"Enter name for player {st.session_state.current_player}:", key=f"player_{st.session_state.current_player}")
-
-        # Only store the name when it's not empty
-        if name:
+        name = st.text_input(f"Enter name for player {st.session_state.current_player}:")
+        if name:  # As soon as name is entered
             st.session_state.players.append({
                 "number": st.session_state.current_player,
                 "name": name,
                 "score": 0,
                 "wolf": False,
             })
-            st.session_state.current_player += 1
-        
-        # Allow transition to next step once all players have been entered
+            st.session_state.current_player += 1  # Move to the next player
         if st.session_state.current_player > st.session_state.num_players:
             st.session_state.players[-1]["wolf"] = True  # Last player starts as Wolf
             st.session_state.state = WAIT_READY
@@ -110,7 +105,7 @@ elif st.session_state.state == CHOOSE_PARTNER:
         index=st.session_state.players.index(wolf)  # Default to the wolf themselves
     )
 
-    if partner_choice:
+    if st.button("Submit"):
         # Find the selected partner's number from their name
         partner_index = next(
             (idx for idx, player in enumerate(st.session_state.players) if player['name'] == partner_choice), 
@@ -122,7 +117,7 @@ elif st.session_state.state == CHOOSE_PARTNER:
 elif st.session_state.state == ASK_WIN:
     st.title("Did the Wolf Win?")
     won = st.radio("Select the outcome:", ["Yes", "No"])
-    if won:
+    if st.button("Submit"):
         wolf_index = next(idx for idx, player in enumerate(st.session_state.players) if player["wolf"])
         calculate_scores(st.session_state.players, wolf_index, st.session_state.partner_choice, won == "Yes")
         st.session_state.turn += 1
