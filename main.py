@@ -62,18 +62,18 @@ def get_winners(players):
 
 # After player registration is complete, display scores:
 def display_scores():
-    st.write("### Current Scores:")
+    st.write("### Scores:")
     for player in st.session_state.players:
         if "name" in player and player["name"]:  # Ensure player names are valid
-            st.write(f"{player['name']}: {player['score']}")
+            st.write(## f"{player['name']}: {player['score']}")
         else:
-            st.write(f"Player {player['number']}: Inconnu (Score: {player['score']})")
+            st.write(## f"Player {player['number']}: Inconnu (Score: {player['score']})")
             
 # Main game loop
 if st.session_state.state == MENU:
     st.title("Disc Golf Wolf")
     choice = st.radio("Choisir une option :", ["Enregistrer les joueurs", "Réglements"])
-    if st.button("Proceed"):
+    if st.button("Débuter"):
         if choice == "Enregistrer les joueurs":
             st.session_state.state = ASK_NUM_PLAYERS
         elif choice == "Réglements":
