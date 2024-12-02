@@ -65,9 +65,9 @@ def display_scores():
     st.write("### Scores:")
     for player in st.session_state.players:
         if "name" in player and player["name"]:  # Ensure player names are valid
-            st.write(## f"{player['name']}: {player['score']}")
+            st.write(f"## {player['name']}: {player['score']}")
         else:
-            st.write(## f"Player {player['number']}: Inconnu (Score: {player['score']})")
+            st.write(f"## Joueurs # {player['number']}: Inconnu (Score: {player['score']})")
             
 # Main game loop
 if st.session_state.state == MENU:
