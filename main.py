@@ -89,7 +89,6 @@ elif st.session_state.state == ASK_PLAYER_NAMES:
         if st.session_state.current_player > st.session_state.num_players:
             st.session_state.players[-1]["wolf"] = True  # Last player starts as Wolf
             st.session_state.state = WAIT_READY
-            st.experimental_rerun()  # Force a rerun to ensure the state updates
 
 elif st.session_state.state == WAIT_READY:
     st.title("Players Ready")
