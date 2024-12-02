@@ -96,17 +96,25 @@ elif st.session_state.state == ASK_NUM_PLAYERS:
 elif st.session_state.state == ASK_PLAYER_NAMES:
     st.title("Enter Player Names")
     if st.session_state.current_player <= st.session_state.num_players:
-        name = st.text_input(f"Enter name for player {st.session_state.current_player}:")
-        if st.button("Submit"):
-            st.session_state.players.append({
-                "number": st.session_state.current_player,
-                "name": name,
-                "score": 0,
-                "wolf": False,
-            })
-            st.session_state.current_player += 1
+        # Text input for current player's name
+        name = st.text_input(
+            f"Enter name for player {st.session_state.current_player}:",
+            key=f"name_input_{st.session_state.current_player}"  # Unique key for each player
+        )
+        if st.button("Submit Name", key=f"submit_button_{st.session_state.current_player}"):
+            if name.strip():  # Check that the name is not empty
+                st.session_state.players.append({
+                    "number": st.session_state.current_player,
+                    "name": name.strip(),
+                    "score": 0,
+                    "wolf": False,
+                })
+                st.session_state.current_player += 1  # Move to the next player
+            else:
+                st.warning("Please enter a valid name.")
     else:
-        st.session_state.players[-1]["wolf"] = True  # Last player starts as Wolf
+        # Assign the last player as the initial wolf
+        st.session_state.players[-1]["wolf"] = True
         st.session_state.state = WAIT_READY
 
 elif st.session_state.state == WAIT_READY:
