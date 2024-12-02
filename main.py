@@ -73,7 +73,9 @@ elif st.session_state.state == ASK_PLAYER_NAMES:
     # Ensure player input form is displayed for the current player
     if st.session_state.current_player <= st.session_state.num_players:
         name = st.text_input(f"Enter name for player {st.session_state.current_player}:")
-        if name:  # As soon as name is entered
+        submit_button = st.button("Submit")
+        
+        if submit_button and name:  # Only proceed if the name is entered and submit is clicked
             st.session_state.players.append({
                 "number": st.session_state.current_player,
                 "name": name,
@@ -81,7 +83,7 @@ elif st.session_state.state == ASK_PLAYER_NAMES:
                 "wolf": False,
             })
             st.session_state.current_player += 1  # Move to the next player
-        if st.session_state.current_player > st.session_state.num_players:
+        elif st.session_state.current_player > st.session_state.num_players:
             st.session_state.players[-1]["wolf"] = True  # Last player starts as Wolf
             st.session_state.state = WAIT_READY
 
