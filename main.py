@@ -108,9 +108,6 @@ elif st.session_state.state == ASK_PLAYER_NAMES:
 
 elif st.session_state.state == WAIT_READY:
     st.title("Players Ready")
-    st.write("Players:")
-    for player in st.session_state.players:
-        st.write(f"{player['number']}: {player['name']} (Score: {player['score']})")
     if st.button("Start Game"):
         st.session_state.state = CHOOSE_PARTNER
 
