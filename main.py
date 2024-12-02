@@ -60,12 +60,15 @@ def get_winners(players):
     max_score = max(p["score"] for p in players)
     return [p for p in players if p["score"] == max_score]
 
-# Display the current scores
+# After player registration is complete, display scores:
 def display_scores():
     st.write("### Current Scores:")
     for player in st.session_state.players:
-        st.write(f"{player['name']}: {player['score']}")
-
+        if "name" in player and player["name"]:  # Ensure player names are valid
+            st.write(f"{player['name']}: {player['score']}")
+        else:
+            st.write(f"Player {player['number']}: No name provided (Score: {player['score']})")
+            
 # Main game loop
 if st.session_state.state == MENU:
     st.title("Disc Golf Wolf")
