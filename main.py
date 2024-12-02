@@ -67,41 +67,41 @@ def display_scores():
         if "name" in player and player["name"]:  # Ensure player names are valid
             st.write(f"{player['name']}: {player['score']}")
         else:
-            st.write(f"Player {player['number']}: No name provided (Score: {player['score']})")
+            st.write(f"Player {player['number']}: Inconnu (Score: {player['score']})")
             
 # Main game loop
 if st.session_state.state == MENU:
     st.title("Disc Golf Wolf")
-    choice = st.radio("Choose an option:", ["Enter Player Names", "View Rules"])
+    choice = st.radio("Choisir une option :", ["Enregistrer les joueurs", "Réglements"])
     if st.button("Proceed"):
-        if choice == "Enter Player Names":
+        if choice == "Enregistrer les joueurs":
             st.session_state.state = ASK_NUM_PLAYERS
-        elif choice == "View Rules":
+        elif choice == "Réglements":
             st.session_state.state = RULES
 
 elif st.session_state.state == RULES:
-    st.title("Rules")
-    st.write("The rules of Disc Golf Wolf will be displayed here.")
-    if st.button("Return to Menu"):
+    st.title("Réglements")
+    st.write("Les réglements seront expliqués ici !")
+    if st.button("Retour au menu"):
         st.session_state.state = MENU
 
 elif st.session_state.state == ASK_NUM_PLAYERS:
     st.title("Disc Golf Wolf")
-    st.session_state.num_players = st.selectbox("Select number of players:", list(range(1, 9)))
-    if st.button("Next"):
+    st.session_state.num_players = st.selectbox("Choisir le nombre de joueurs :", list(range(1, 9)))
+    if st.button("Suivant"):
         st.session_state.state = ASK_PLAYER_NAMES
         st.session_state.players = []
         st.session_state.current_player = 1
 
 elif st.session_state.state == ASK_PLAYER_NAMES:
-    st.title("Enter Player Names")
+    st.title("Entrer le nom des joueurs")
     if st.session_state.current_player <= st.session_state.num_players:
         # Text input for current player's name
         name = st.text_input(
-            f"Enter name for player {st.session_state.current_player}:",
+            f"Entrer le nom du joueurs # {st.session_state.current_player}:",
             key=f"name_input_{st.session_state.current_player}"  # Unique key for each player
         )
-        if st.button("Submit Name", key=f"submit_button_{st.session_state.current_player}"):
+        if st.button("Soumettre", key=f"submit_button_{st.session_state.current_player}"):
             if name.strip():  # Check that the name is not empty
                 st.session_state.players.append({
                     "number": st.session_state.current_player,
@@ -111,29 +111,29 @@ elif st.session_state.state == ASK_PLAYER_NAMES:
                 })
                 st.session_state.current_player += 1  # Move to the next player
             else:
-                st.warning("Please enter a valid name.")
+                st.warning("Entrer un nom valide.")
     else:
         # Assign the last player as the initial wolf
         st.session_state.players[-1]["wolf"] = True
         st.session_state.state = WAIT_READY
 
 elif st.session_state.state == WAIT_READY:
-    st.title("Players Ready")
-    if st.button("Start Game"):
+    st.title("Joueurs Prêt !")
+    if st.button("Débuter la partie"):
         st.session_state.state = CHOOSE_PARTNER
 
 elif st.session_state.state == CHOOSE_PARTNER:
-    st.title(f"Hole {st.session_state.turn}")
+    st.title(f"Trous # {st.session_state.turn}")
     wolf = [p for p in st.session_state.players if p['wolf']][0]
-    st.write(f"The Wolf is: {wolf['name']}")
+    st.write(f"Le wolf est : {wolf['name']}")
 
     partner_choice = st.selectbox(
-        "Choose a partner (or yourself):",
+        "Choisissez un partenaire ou vous-même :",
         options=[player['name'] for player in st.session_state.players],
         index=st.session_state.players.index(wolf)  # Default to the wolf themselves
     )
 
-    if st.button("Submit"):
+    if st.button("Soumettre"):
         partner_index = next(
             (idx for idx, player in enumerate(st.session_state.players) if player['name'] == partner_choice), 
             None
@@ -142,11 +142,11 @@ elif st.session_state.state == CHOOSE_PARTNER:
         st.session_state.state = ASK_WIN
 
 elif st.session_state.state == ASK_WIN:
-    st.title("Did the Wolf Win?")
-    won = st.radio("Select the outcome:", ["Yes", "No"])
-    if st.button("Submit"):
+    st.title("Est-ce que le Wolf a réussi ?")
+    won = st.radio("Select the outcome:", ["Oui", "Non"])
+    if st.button("Soumettre"):
         wolf_index = next(idx for idx, player in enumerate(st.session_state.players) if player["wolf"])
-        calculate_scores(st.session_state.players, wolf_index, st.session_state.partner_choice, won == "Yes")
+        calculate_scores(st.session_state.players, wolf_index, st.session_state.partner_choice, won == "Oui")
         st.session_state.turn += 1
         if st.session_state.turn > 9:  # End after 9 holes
             st.session_state.state = SHOW_RESULTS
@@ -159,13 +159,13 @@ elif st.session_state.state == SHOW_RESULTS:
     winners = get_winners(st.session_state.players)
     if winners:
         if len(winners) == 1:
-            st.write(f"Congratulations, {winners[0]['name']}! You won!")
+            st.write(f"Félicitations, {winners[0]['name']}, vous avez gagné !")
         else:
             winner_names = ", ".join([winner["name"] for winner in winners])
-            st.write(f"Congratulations, {winner_names}! You all won!")
+            st.write(f"Félicitations, {winner_names}! vous avez gagnés !")
     else:
-        st.write("No winners this time.")
-    if st.button("Play Again"):
+        st.write("Aucun gagnant !? incroyable")
+    if st.button("Jouez encore ?"):
         st.session_state.state = MENU
         st.session_state.turn = 1
         for player in st.session_state.players:
