@@ -105,7 +105,7 @@ elif st.session_state.state == ASK_PLAYER_NAMES:
             if name.strip():  # Check that the name is not empty
                 st.session_state.players.append({
                     "number": st.session_state.current_player,
-                    "name": name.strip(),
+                    "name": name,
                     "score": 0,
                     "wolf": False,
                 })
