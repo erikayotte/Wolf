@@ -61,7 +61,7 @@ def get_winners(players):
 # Main game loop
 if st.session_state.state == ASK_NUM_PLAYERS:
     st.title("Disc Golf Wolf")
-    st.session_state.num_players = st.number_input("Enter number of players:", min_value=2, max_value=10, step=1)
+    st.session_state.num_players = st.selectbox("Select number of players:", list(range(1, 9)))
     if st.button("Next"):
         st.session_state.state = ASK_PLAYER_NAMES
         st.session_state.players = []
