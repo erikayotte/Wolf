@@ -1,6 +1,8 @@
 import streamlit as st
 
 # Define constants for game states
+MENU = "menu"
+RULES = "rules"
 ASK_NUM_PLAYERS = "ask_num_players"
 ASK_PLAYER_NAMES = "ask_player_names"
 WAIT_READY = "wait_ready"
@@ -10,7 +12,7 @@ SHOW_RESULTS = "show_results"
 
 # Initialize session state variables
 if "state" not in st.session_state:
-    st.session_state.state = ASK_NUM_PLAYERS
+    st.session_state.state = MENU
 if "num_players" not in st.session_state:
     st.session_state.num_players = 0
 if "current_player" not in st.session_state:
@@ -58,14 +60,29 @@ def get_winners(players):
     max_score = max(p["score"] for p in players)
     return [p for p in players if p["score"] == max_score]
 
-# Display the current scores at the bottom of the screen
+# Display the current scores
 def display_scores():
-    st.write("### Scores:")
+    st.write("### Current Scores:")
     for player in st.session_state.players:
         st.write(f"{player['name']}: {player['score']}")
 
 # Main game loop
-if st.session_state.state == ASK_NUM_PLAYERS:
+if st.session_state.state == MENU:
+    st.title("Disc Golf Wolf")
+    choice = st.radio("Choose an option:", ["Enter Player Names", "View Rules"])
+    if st.button("Proceed"):
+        if choice == "Enter Player Names":
+            st.session_state.state = ASK_NUM_PLAYERS
+        elif choice == "View Rules":
+            st.session_state.state = RULES
+
+elif st.session_state.state == RULES:
+    st.title("Rules")
+    st.write("The rules of Disc Golf Wolf will be displayed here.")
+    if st.button("Return to Menu"):
+        st.session_state.state = MENU
+
+elif st.session_state.state == ASK_NUM_PLAYERS:
     st.title("Disc Golf Wolf")
     st.session_state.num_players = st.selectbox("Select number of players:", list(range(1, 9)))
     if st.button("Next"):
@@ -102,7 +119,6 @@ elif st.session_state.state == CHOOSE_PARTNER:
     wolf = [p for p in st.session_state.players if p['wolf']][0]
     st.write(f"The Wolf is: {wolf['name']}")
 
-    # Dropdown to choose a partner by name
     partner_choice = st.selectbox(
         "Choose a partner (or yourself):",
         options=[player['name'] for player in st.session_state.players],
@@ -110,7 +126,6 @@ elif st.session_state.state == CHOOSE_PARTNER:
     )
 
     if st.button("Submit"):
-        # Find the selected partner's number from their name
         partner_index = next(
             (idx for idx, player in enumerate(st.session_state.players) if player['name'] == partner_choice), 
             None
@@ -143,10 +158,11 @@ elif st.session_state.state == SHOW_RESULTS:
     else:
         st.write("No winners this time.")
     if st.button("Play Again"):
-        st.session_state.state = ASK_NUM_PLAYERS
+        st.session_state.state = MENU
         st.session_state.turn = 1
         for player in st.session_state.players:
             player["score"] = 0
 
-# Display scores at the bottom of every page
-display_scores()
+# Display scores after all players are registered
+if st.session_state.state not in {MENU, RULES, ASK_NUM_PLAYERS, ASK_PLAYER_NAMES}:
+    display_scores()
