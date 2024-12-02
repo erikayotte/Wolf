@@ -69,9 +69,14 @@ if st.session_state.state == ASK_NUM_PLAYERS:
 
 elif st.session_state.state == ASK_PLAYER_NAMES:
     st.title("Enter Player Names")
+    
+    # Check if we're on the right player
     if st.session_state.current_player <= st.session_state.num_players:
-        name = st.text_input(f"Enter name for player {st.session_state.current_player}:")
-        if name:  # When a name is entered
+        # Create the input box for the player's name
+        name = st.text_input(f"Enter name for player {st.session_state.current_player}:", key=f"player_{st.session_state.current_player}")
+
+        # Only store the name when it's not empty
+        if name:
             st.session_state.players.append({
                 "number": st.session_state.current_player,
                 "name": name,
@@ -79,9 +84,12 @@ elif st.session_state.state == ASK_PLAYER_NAMES:
                 "wolf": False,
             })
             st.session_state.current_player += 1
-    else:
-        st.session_state.players[-1]["wolf"] = True  # Last player starts as Wolf
-        st.session_state.state = WAIT_READY
+        
+        # Allow transition to next step once all players have been entered
+        if st.session_state.current_player > st.session_state.num_players:
+            st.session_state.players[-1]["wolf"] = True  # Last player starts as Wolf
+            st.session_state.state = WAIT_READY
+            st.experimental_rerun()  # Force a rerun to ensure the state updates
 
 elif st.session_state.state == WAIT_READY:
     st.title("Players Ready")
