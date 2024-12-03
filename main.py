@@ -68,9 +68,9 @@ def display_scores():
         if "name" in player and player["name"]:  # Ensure player names are valid
             st.write(f"{count} - {player['name']} : {player['score']}")
             count +=1
-        else:
-            st.write(f"{count} - Joueurs # {player['number']} : Inconnu (Score: {player['score']})")
-            count +=1
+ ##       else:
+    ##        st.write(f"{count} - Joueurs # {player['number']} : Inconnu (Score: {player['score']})")
+    ##        count +=1
             
 # Main game loop
 if st.session_state.state == MENU:
