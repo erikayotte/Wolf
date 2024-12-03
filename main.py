@@ -109,7 +109,7 @@ elif st.session_state.state == ASK_PLAYER_NAMES:
             if name.strip():  # Ensure name is not empty
                 st.session_state.players.append({
                     "number": st.session_state.current_player,
-                    "name": name,
+                    "name": name.upper(),
                     "score": 0,
                     "wolf": False,
                 })
@@ -186,10 +186,14 @@ elif st.session_state.state == SHOW_RESULTS:
 
     # Offer to replay with the same players
     if st.button("Rejouer avec les mêmes joueurs"):
-        st.session_state.state = WAIT_READY
-        st.session_state.turn = 1
-        for player in st.session_state.players:
-            player["score"] = 0  # Reset scores for a new game
+        if st.button("Continuer les scores ?"):
+            st.session_state.state = WAIT_READY
+            st.session_state.turn = 1
+        else:
+            st.session_state.state = WAIT_READY
+            st.session_state.turn = 1
+            for player in st.session_state.players:
+                player["score"] = 0  # Reset scores for a new game
 
     # Offer to return to the main menu
     if st.button("Retour au menu principal"):
