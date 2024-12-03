@@ -62,7 +62,7 @@ def get_winners(players):
 
 # After player registration is complete, display scores:
 def display_scores():
-    st.write("### Scores:")
+    st.write("## Scores:")
     for player in st.session_state.players:
         if "name" in player and player["name"]:  # Ensure player names are valid
             st.write(f"# {player['name']}: {player['score']}")
@@ -87,7 +87,8 @@ elif st.session_state.state == RULES:
 
 elif st.session_state.state == ASK_NUM_PLAYERS:
     st.title("Disc Golf Wolf")
-    st.session_state.num_players = st.selectbox("Choisir le nombre de joueurs :", list(range(1, 9))
+    st.session_state.num_players = st.selectbox("Choisir le nombre de joueurs :", list(range(1, 9)))
+                                                
     if st.button("Suivant"):
         st.session_state.state = ASK_PLAYER_NAMES
         st.session_state.players = []
@@ -133,7 +134,7 @@ elif st.session_state.state == WAIT_READY:
 elif st.session_state.state == CHOOSE_PARTNER:
     st.title(f"Trous # {st.session_state.turn}")
     wolf = [p for p in st.session_state.players if p['wolf']][0]
-    st.write(f"Le wolf est : # {wolf['name']}  )
+    st.write(f"Le # Wolf est : # {wolf['name']}")
 
     partner_choice = st.selectbox("Choisissez un partenaire ou vous-même ",
         options=[player['name'] for player in st.session_state.players],
