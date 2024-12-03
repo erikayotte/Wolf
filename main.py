@@ -4,7 +4,7 @@ background_url = "https://raw.githubusercontent.com/erikayotte/Wolf/refs/heads/m
 
 # Apply background using CSS
 st.markdown(
-    f""
+    f"""
     <style>
         body {
             background-image: url("{background_url}");
@@ -15,7 +15,7 @@ st.markdown(
             margin: 0;
         }
     </style>
-    "", 
+    """, 
     unsafe_allow_html=True
 )
 
