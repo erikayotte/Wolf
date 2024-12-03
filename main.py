@@ -6,14 +6,14 @@ background_url = "https://raw.githubusercontent.com/erikayotte/Wolf/refs/heads/m
 st.markdown(
     f"""
     <style>
-        body {
+        body {{
             background-image: url("{background_url}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             height: 100vh;
             margin: 0;
-        }
+        }}
     </style>
     """, 
     unsafe_allow_html=True
