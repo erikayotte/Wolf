@@ -189,14 +189,12 @@ elif st.session_state.state == SHOW_RESULTS:
 
     # Offer to replay with the same players
     if st.button("Rejouer avec les mêmes joueurs"):
-        if st.button("Continuer les scores ?"):
-            st.session_state.state = WAIT_READY
-            st.session_state.turn = 1
-        else:
-            st.session_state.state = WAIT_READY
-            st.session_state.turn = 1
-            for player in st.session_state.players:
-                player["score"] = 0  # Reset scores for a new game
+        st.session_state.state = WAIT_READY
+        st.session_state.turn = 1
+
+    if st.radio("Voulez-vous continuer les scores ?", ["Oui", "Non"]) == "Non":
+        for player in st.session_state.players:
+            player["score"] = 0  # Reset scores for a new game
 
     # Offer to return to the main menu
     if st.button("Retour au menu principal"):
