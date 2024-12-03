@@ -87,7 +87,7 @@ elif st.session_state.state == RULES:
 
 elif st.session_state.state == ASK_NUM_PLAYERS:
     st.title("Disc Golf Wolf")
-    st.session_state.num_players = st.selectbox("# Choisir le nombre de joueurs :", list(range(1, 9)))
+    st.session_state.num_players = st.selectbox("Choisir le nombre de joueurs :", list(range(1, 9)))
                                                 
     if st.button("Suivant"):
         st.session_state.state = ASK_PLAYER_NAMES
