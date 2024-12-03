@@ -70,9 +70,9 @@ def display_scores():
         
 # Scores final
 def display_scores_final():
-    st.write("### Pointage Final :")
+    st.write("Pointage Final :")
     for player in st.session_state.players:
-        st.write(f"# {player['name']} : {player['score']}")
+        st.write(f"{player['name']} : {player['score']}")
 
 
 # Main game loop
@@ -158,9 +158,7 @@ elif st.session_state.state == ASK_WIN:
             st.session_state.state = CHOOSE_PARTNER
 
 elif st.session_state.state == SHOW_RESULTS:
-    display_scores_final()
     st.title("Fin de la partie")
-
     winners = get_winners(st.session_state.players)
     if winners:
         if len(winners) == 1:
@@ -170,7 +168,7 @@ elif st.session_state.state == SHOW_RESULTS:
             st.write(f"### Félicitations, {winner_names}! Vous avez gagnés !")
     else:
         st.write("### Aucun gagnant !? Incroyable.")
-
+    display_scores_final()
     st.subheader("Merci d'avoir joué à Disc Golf Wolf ! 🎉")
 
     # Offer donation link
