@@ -139,7 +139,7 @@ elif st.session_state.state == CHOOSE_PARTNER:
 
 elif st.session_state.state == ASK_WIN:
     wolf = [p for p in st.session_state.players if p['wolf']][0]
-    st.title(f"Est-ce que le Wolf {wolf['name']} a réussi ?")
+    st.title(f"Est-ce que le Wolf {wolf['name']} a réussi?")
     won = st.radio("Choisissez le résultat:", ["Oui", "Non"], key=f"won_radio_{st.session_state.turn}")
     if st.button("Soumettre"):
         wolf_index = next(idx for idx, player in enumerate(st.session_state.players) if player["wolf"])
