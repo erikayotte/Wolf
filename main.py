@@ -72,7 +72,7 @@ def display_scores():
 def display_scores_final():
     st.write("### Pointage Final :")
     for player in st.session_state.players:
-        st.write(f"# {count} - {player['name']} : {player['score']}")
+        st.write(f"# {player['name']} : {player['score']}")
 
 
 # Main game loop
