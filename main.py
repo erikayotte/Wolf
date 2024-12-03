@@ -62,12 +62,15 @@ def get_winners(players):
 
 # After player registration is complete, display scores:
 def display_scores():
-    st.write("### Scores:")
+    st.write("### Scores et ordre de jeu :")
+    count = 1
     for player in st.session_state.players:
         if "name" in player and player["name"]:  # Ensure player names are valid
-            st.write(f"{player['name']} : {player['score']}")
+            st.write(f"{count} - {player['name']} : {player['score']}")
+            count +=1
         else:
-            st.write(f"Joueurs # {player['number']} : Inconnu (Score: {player['score']})")
+            st.write(f"{count} - Joueurs # {player['number']} : Inconnu (Score: {player['score']})")
+            count +=1
             
 # Main game loop
 if st.session_state.state == MENU:
