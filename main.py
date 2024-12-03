@@ -87,7 +87,7 @@ elif st.session_state.state == RULES:
 
 elif st.session_state.state == ASK_NUM_PLAYERS:
     st.title("Disc Golf Wolf")
-    st.session_state.num_players = st.selectbox("Choisir le nombre de joueurs :", list(range(1, 9)))
+    st.session_state.num_players = st.selectbox("# Choisir le nombre de joueurs :", list(range(1, 9)))
                                                 
     if st.button("Suivant"):
         st.session_state.state = ASK_PLAYER_NAMES
@@ -100,7 +100,7 @@ elif st.session_state.state == ASK_PLAYER_NAMES:
     if st.session_state.current_player <= st.session_state.num_players:
         # Text input for the current player's name
         name = st.text_input(
-            f"Entrer le nom du joueur #{st.session_state.current_player}:",
+            f"# Entrer le nom du joueur #{st.session_state.current_player}:",
             key=f"name_input_{st.session_state.current_player}"  # Unique key for each player
         )
         
@@ -134,7 +134,7 @@ elif st.session_state.state == WAIT_READY:
 elif st.session_state.state == CHOOSE_PARTNER:
     st.title(f"Trous # {st.session_state.turn}")
     wolf = [p for p in st.session_state.players if p['wolf']][0]
-    st.write(f"Le # Wolf est : # {wolf['name']}")
+    st.write(f"# Le ## Wolf est : ## {wolf['name']}")
 
     partner_choice = st.selectbox("Choisissez un partenaire ou vous-même ",
         options=[player['name'] for player in st.session_state.players],
@@ -151,7 +151,7 @@ elif st.session_state.state == CHOOSE_PARTNER:
 
 elif st.session_state.state == ASK_WIN:
     st.title("Est-ce que le Wolf # {wolf['name']} a gagné ?")
-    won = st.radio("Choisissez le résulat:", ["Oui", "Non"], key=f"won_radio_{st.session_state.turn}")
+    won = st.radio("# Choisissez le résulat:", ["Oui", "Non"], key=f"won_radio_{st.session_state.turn}")
     
     if st.button("Soumettre", key=f"submit_win_{st.session_state.turn}"):
         if won:
@@ -169,12 +169,12 @@ elif st.session_state.state == SHOW_RESULTS:
     winners = get_winners(st.session_state.players)
     if winners:
         if len(winners) == 1:
-            st.write(f"Félicitations, {winners[0]['name']}, vous avez gagné !")
+            st.write(f"### Félicitations, {winners[0]['name']}, vous avez gagné !")
         else:
             winner_names = ", ".join([winner["name"] for winner in winners])
-            st.write(f"Félicitations, {winner_names}! Vous avez gagnés !")
+            st.write(f"### Félicitations, {winner_names}! Vous avez gagnés !")
     else:
-        st.write("Aucun gagnant !? Incroyable.")
+        st.write("### Aucun gagnant !? Incroyable.")
 
     st.subheader("Merci d'avoir joué à Disc Golf Wolf ! 🎉")
 
