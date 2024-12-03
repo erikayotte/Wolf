@@ -165,21 +165,36 @@ elif st.session_state.state == ASK_WIN:
                 st.session_state.state = CHOOSE_PARTNER
 
 elif st.session_state.state == SHOW_RESULTS:
-    st.title("Game Over")
+    st.title("Fin de la partie")
     winners = get_winners(st.session_state.players)
     if winners:
         if len(winners) == 1:
             st.write(f"Félicitations, {winners[0]['name']}, vous avez gagné !")
         else:
             winner_names = ", ".join([winner["name"] for winner in winners])
-            st.write(f"Félicitations, {winner_names}! vous avez gagnés !")
+            st.write(f"Félicitations, {winner_names}! Vous avez gagnés !")
     else:
-        st.write("Aucun gagnant !? incroyable")
-    if st.button("Jouez encore ?"):
-        st.session_state.state = MENU
+        st.write("Aucun gagnant !? Incroyable.")
+
+    st.subheader("Merci d'avoir joué à Disc Golf Wolf ! 🎉")
+
+    # Offer donation link
+    st.write("Si vous avez apprécié le jeu, vous pouvez nous soutenir en faisant un don. Merci pour votre générosité !")
+    donation_url = "https://www.paypal.com/donate/?hosted_button_id=YOUR_PAYPAL_BUTTON_ID"
+    st.markdown(f"[Faire un don 💖]({donation_url})", unsafe_allow_html=True)
+
+    # Offer to replay with the same players
+    if st.button("Rejouer avec les mêmes joueurs"):
+        st.session_state.state = WAIT_READY
         st.session_state.turn = 1
         for player in st.session_state.players:
-            player["score"] = 0
+            player["score"] = 0  # Reset scores for a new game
+
+    # Offer to return to the main menu
+    if st.button("Retour au menu principal"):
+        st.session_state.state = MENU
+        st.session_state.turn = 1
+        st.session_state.players = []  # Clear the player list
 
 # Display scores after all players are registered
 if st.session_state.state not in {MENU, RULES, ASK_NUM_PLAYERS, ASK_PLAYER_NAMES, WAIT_READY}:
