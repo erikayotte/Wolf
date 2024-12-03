@@ -65,15 +65,14 @@ def display_scores():
     st.write("### Scores et ordre de jeu :")
     count = 1
     for player in st.session_state.players:
-        if "name" in player and player["name"]:  # Ensure player names are valid
-            st.write(f"{count} - {player['name']} : {player['score']}")
-            count += 1
+        st.write(f"{count} - {player['name']} : {player['score']}")
+        count += 1
+        
 # Scores final
 def display_scores_final():
     st.write("### Pointage Final :")
     for player in st.session_state.players:
-        if "name" in player and player["name"]:  # Ensure player names are valid
-            st.write(f"# {count} - {player['name']} : {player['score']}")
+        st.write(f"# {count} - {player['name']} : {player['score']}")
 
 
 # Main game loop
