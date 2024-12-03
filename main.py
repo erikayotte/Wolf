@@ -165,7 +165,7 @@ elif st.session_state.state == SHOW_RESULTS:
             st.markdown("<h2 style='text-align: center;'>Félicitations, {winners[0]['name']}, vous avez gagné !</h2>", unsafe_allow_html=True)
         else:
             winner_names = ", ".join([winner["name"] for winner in winners])
-            st.markdown(<h2 style='text-align: center;'>Félicitations, {winner_names}! Vous avez gagnés !</h2>", unsafe_allow_html=True)
+            st.markdown("<h2 style='text-align: center;'>Félicitations, {winner_names}! Vous avez gagnés !</h2>", unsafe_allow_html=True)
     else:
         st.markdown("<h2 style='text-align: center;'> Aucun gagnant !? Incroyable.</h2>", unsafe_allow_html=True)
     display_scores_final()
