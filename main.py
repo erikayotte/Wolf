@@ -158,7 +158,7 @@ elif st.session_state.state == ASK_WIN:
             st.session_state.state = CHOOSE_PARTNER
 
 elif st.session_state.state == SHOW_RESULTS:
-    st.title("Fin de la partie")
+    st.markdown("<h2 style='text-align: center;'>Fin de la partie</h2>", unsafe_allow_html=True)
     winners = get_winners(st.session_state.players)
     if winners:
         if len(winners) == 1:
