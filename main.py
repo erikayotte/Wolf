@@ -68,6 +68,13 @@ def display_scores():
         if "name" in player and player["name"]:  # Ensure player names are valid
             st.write(f"{count} - {player['name']} : {player['score']}")
             count += 1
+# Scores final
+def display_scores_final():
+    st.write("### Pointage Final :")
+    for player in st.session_state.players:
+        if "name" in player and player["name"]:  # Ensure player names are valid
+            st.write(f"# {count} - {player['name']} : {player['score']}")
+
 
 # Main game loop
 if st.session_state.state == MENU:
@@ -153,6 +160,7 @@ elif st.session_state.state == ASK_WIN:
 
 elif st.session_state.state == SHOW_RESULTS:
     st.title("Fin de la partie")
+    display_scores_final()
     winners = get_winners(st.session_state.players)
     if winners:
         if len(winners) == 1:
@@ -186,6 +194,6 @@ elif st.session_state.state == SHOW_RESULTS:
         st.session_state.players = []  # Clear the player list
 
 # Display scores during gameplay
-if st.session_state.state not in {MENU, RULES, ASK_NUM_PLAYERS, ASK_PLAYER_NAMES, WAIT_READY}:
+if st.session_state.state not in {MENU, RULES, ASK_NUM_PLAYERS, ASK_PLAYER_NAMES, WAIT_READY, SHOW_RESULTS}:
     display_scores()
 
