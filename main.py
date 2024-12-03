@@ -135,7 +135,7 @@ elif st.session_state.state == CHOOSE_PARTNER:
     wolf = [p for p in st.session_state.players if p['wolf']][0]
     st.write(f"Le wolf est : # {wolf['name']}  )
 
-    partner_choice = st.selectbox("# Choisissez un partenaire ou vous-même ",
+    partner_choice = st.selectbox("Choisissez un partenaire ou vous-même ",
         options=[player['name'] for player in st.session_state.players],
         index=st.session_state.players.index(wolf)  # Default to the wolf themselves
     )
