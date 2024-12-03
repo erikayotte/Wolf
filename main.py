@@ -159,8 +159,9 @@ elif st.session_state.state == ASK_WIN:
             st.session_state.state = CHOOSE_PARTNER
 
 elif st.session_state.state == SHOW_RESULTS:
-    st.title("Fin de la partie")
     display_scores_final()
+    st.title("Fin de la partie")
+
     winners = get_winners(st.session_state.players)
     if winners:
         if len(winners) == 1:
