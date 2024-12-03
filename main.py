@@ -1,20 +1,24 @@
 import streamlit as st
 # URL of the .ico file from GitHub (replace with your actual file path)
-background_url = "https://raw.githubusercontent.com/erikayotte/Wolf/blob/main/wolfico.ico"
+background_url = "https://raw.githubusercontent.com/erikayotte/Wolf/refs/heads/main/wolfico.ico"
 
 # Apply background using CSS
 st.markdown(
-    f"""
+    f""
     <style>
         body {
             background-image: url("{background_url}");
+            background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
         }
     </style>
-    """, 
-    unsafe_allow_html=True 
+    "", 
+    unsafe_allow_html=True
 )
-    
+
 # Define constants for game states
 MENU = "menu"
 RULES = "rules"
