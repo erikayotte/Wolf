@@ -150,7 +150,7 @@ elif st.session_state.state == CHOOSE_PARTNER:
         st.session_state.state = ASK_WIN
 
 elif st.session_state.state == ASK_WIN:
-    st.title(f"Est-ce que le Wolf {wolf['name']} a gagné ?")
+    st.write(f"# Est-ce que le Wolf {wolf['name']} a gagné ?")
     won = st.radio("# Choisissez le résulat:", ["Oui", "Non"], key=f"won_radio_{st.session_state.turn}")
     
     if st.button("Soumettre", key=f"submit_win_{st.session_state.turn}"):
