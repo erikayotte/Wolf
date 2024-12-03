@@ -70,10 +70,10 @@ def display_scores():
         
 # Scores final
 def display_scores_final():
-    st.markdown("<h2 style='text-align: center;'>Pointage Final :</h2>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: center;'>Pointage Final :</h4>", unsafe_allow_html=True)
     # Centering the player names and scores
     for player in st.session_state.players:
-        st.markdown(f"<p style='text-align: center;'>{player['name']} : {player['score']}</p>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center: bold;'>{player['name']} : {player['score']}</p>", unsafe_allow_html=True)
 
 # Main game loop
 if st.session_state.state == MENU:
