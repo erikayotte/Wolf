@@ -162,7 +162,7 @@ elif st.session_state.state == SHOW_RESULTS:
     winners = get_winners(st.session_state.players)
     if winners:
         if len(winners) == 1:
-            st.markdown(<h2 style='text-align: center;'>Félicitations, {winners[0]['name']}, vous avez gagné !</h2>", unsafe_allow_html=True)
+            st.markdown("<h2 style='text-align: center;'>Félicitations, {winners[0]['name']}, vous avez gagné !</h2>", unsafe_allow_html=True)
         else:
             winner_names = ", ".join([winner["name"] for winner in winners])
             st.markdown(<h2 style='text-align: center;'>Félicitations, {winner_names}! Vous avez gagnés !</h2>", unsafe_allow_html=True)
